@@ -16,9 +16,7 @@ class Content(Base):
     title = Column(String)
     url = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
-    # -------------------------------
-# WALLET
-# -------------------------------
+   
 class Wallet(Base):
     __tablename__ = "wallets"
 
@@ -26,9 +24,7 @@ class Wallet(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     balance = Column(Integer, default=0)
 
-# -------------------------------
-# TRANSACTIONS (history)
-# -------------------------------
+
 class Transaction(Base):
     __tablename__ = "transactions"
 
@@ -38,9 +34,7 @@ class Transaction(Base):
     type = Column(String)  # "credit" or "debit"
     description = Column(String)
 
-# -------------------------------
-# FOLLOW SYSTEM
-# -------------------------------
+
 class Follow(Base):
     __tablename__ = "follows"
 
