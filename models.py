@@ -31,7 +31,7 @@ class Transaction(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer)
     amount = Column(Integer)
-    type = Column(String)  # "credit" or "debit"
+    type = Column(String)  
     description = Column(String)
 
 
