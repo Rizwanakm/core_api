@@ -7,10 +7,10 @@ import os
 
 app = FastAPI()
 
-# Create uploads folder
+
 os.makedirs("uploads", exist_ok=True)
 
-# Create tables
+
 Base.metadata.create_all(bind=engine)
 
 
