@@ -13,9 +13,7 @@ os.makedirs("uploads", exist_ok=True)
 # Create tables
 Base.metadata.create_all(bind=engine)
 
-# -------------------------------
-# DB Dependency
-# -------------------------------
+
 def get_db():
     db = SessionLocal()
     try:
@@ -23,9 +21,7 @@ def get_db():
     finally:
         db.close()
 
-# -------------------------------
-# REGISTER
-# -------------------------------
+
 @app.post("/v1/auth/register")
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
@@ -43,9 +39,6 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     return {"message": "User registered successfully"}
 
-# -------------------------------
-# LOGIN
-# -------------------------------
 @app.post("/v1/auth/login")
 def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 
@@ -61,16 +54,12 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 
     return {"access_token": token}
 
-# -------------------------------
-# HOME
-# -------------------------------
+
 @app.get("/")
 def home():
     return {"message": "API is running 🚀"}
 
-# -------------------------------
-# FEED (JWT)
-# -------------------------------
+
 @app.get("/v1/feed")
 def get_feed(user_id: int = Depends(get_current_user)):
     return {
@@ -78,9 +67,7 @@ def get_feed(user_id: int = Depends(get_current_user)):
         "user_id": user_id
     }
 
-# -------------------------------
-# UPLOAD CONTENT (JWT)
-# -------------------------------
+
 @app.post("/v1/content/upload/initiate")
 def upload_content(
     title: str = Form(...),
@@ -109,9 +96,6 @@ def upload_content(
         "url": file_location
     }
 
-# -------------------------------
-# GET CONTENT (NO AUTH)
-# -------------------------------
 @app.get("/v1/content/{id}")
 def get_content(id: int, db: Session = Depends(get_db)):
     content = db.query(models.Content).filter(models.Content.id == id).first()
@@ -125,9 +109,7 @@ def get_content(id: int, db: Session = Depends(get_db)):
         "url": content.url
     }
 
-# -------------------------------
-# DELETE CONTENT (JWT)
-# -------------------------------
+
 @app.delete("/v1/content/{id}")
 def delete_content(
     id: int,
@@ -147,9 +129,7 @@ def delete_content(
 
     return {"message": "Deleted successfully"}
 
-# -------------------------------
-# CHECK DB
-# -------------------------------
+
 @app.get("/check-db")
 def check_db():
     return {"status": "connected"}
